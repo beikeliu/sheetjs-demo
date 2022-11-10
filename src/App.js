@@ -1,37 +1,6 @@
 import { read, utils, writeFileXLSX } from 'xlsx'
 import { useState } from 'react';
-import './ktable.css';
-const KTable= ({ rowKey, data, option }) => {
-  return (
-    <>
-      <table className="k-table">
-        <thead>
-          <tr>
-            {option.map((op) => (
-              <th key={op.title}>{op.title}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((dt, index) => (
-            <tr key={dt[rowKey]}>
-              {option.map((op) => (
-                <td key={op.title}>
-                  {op.render
-                    ? op.render(op.in ? dt[op.in] : null, dt, index)
-                    : op.in
-                    ? dt[op.in]
-                    : null}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
-  );
-};
-
+import Ktable from './Ktable';
 const App = () => {
   const [data, setData] = useState([]);
   const [option, setOption] = useState([]);
@@ -57,9 +26,8 @@ const App = () => {
     <>
       <input type='file' onChange={onImport} onClick={(e) => e.target.value = null} />
       <button onClick={onExport}>导出</button>
-      <KTable rowKey="姓名" data={data} option={option}/>
+      <Ktable rowKey="姓名" data={data} option={option} />
     </>
   )
 }
-
 export default App;
